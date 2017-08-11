@@ -13,6 +13,7 @@ This is the list of the oficial plugins availables.
 - [Redis](https://www.npmjs.com/package/@runnerty/executor-redis)
 - [Postgres](https://www.npmjs.com/package/@runnerty/executor-postgres)
 - [Mail](https://www.npmjs.com/package/@runnerty/executor-mail)
+- [Filesystem](https://www.npmjs.com/package/@runnerty/executor-filesystem)
 - [AWS-S3](https://www.npmjs.com/package/@runnerty/executor-s3)
 - [PDF](https://www.npmjs.com/package/@runnerty/executor-pdf)
 - [SCP](https://www.npmjs.com/package/@runnerty/executor-scp)
