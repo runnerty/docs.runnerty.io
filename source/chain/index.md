@@ -35,7 +35,7 @@ This is an example of a basic chain with one process:
 
 A chain has two identification fields:
 
-**id**, identifies the chain. with this identifier Runnerty will provide a global value (*:CHAIN_ID*) that can be used in the whole chain. To know more about global values have a look [here](conf.md)
+**id**, identifies the chain. with this identifier Runnerty will provide a global value (*:CHAIN_ID*) that can be used in the whole chain. To know more about global values have a look [here](../config/)
 
 ```json
 {
@@ -193,19 +193,19 @@ The following example shows how to set up notifications for the different states
   }
 }
 ```
->Note the usage of the *global value :CHAIN_ID* on the previous example. This value will be replaced with the chain's *id*. Know more about global values [here](conf.md)
+>Note the usage of the *global value :CHAIN_ID* on the previous example. This value will be replaced with the chain's *id*. Know more about global values [here](../config/)
 
 
 (List of avaliable officialy notificators coming out soon).
 
-Learn more about notificators and how to configure them [here](notificators.md).
+Learn more about notificators and how to configure them [here](../notificators/).
 
 
 ### Processes
 
 In the **processes** array property can be defined all the processes that are going to be part of the chain.
 
-Learn more about *processes* and how to configure them [here](process.md).
+Learn more about *processes* and how to configure them [here](../process/).
 
 
 ```json

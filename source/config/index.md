@@ -33,7 +33,7 @@ In the config.json file is set the configuration of the different executors, not
 
 ### Executors
 
-The executors are plugins which enclose functionalities. This plugins allows Runnerty execute processes, data bases operations, use external services, etc. This is a list of the official available [here](plugins.md)
+The executors are plugins which enclose functionalities. This plugins allows Runnerty execute processes, data bases operations, use external services, etc. This is a list of the official available [here](../plugins/)
 
 In the config.json file are defined all the executors that are going to be used in the whole plan.
 
