@@ -1,0 +1,31 @@
+# config
+logo: /images/runnerty.png
+keywords: "runnerty, scheduler, task, task manager, automation, job, notifications, executions, sysadmin, tools, logs, log, reload, programmatic, production, monitoring, process manager, profiling, cron, devops, dev ops"
+pubkey: 13DB CAA1 2633 81A7
+sections: 
+  HOME:
+    items:
+      quick start: /
+  DOCS:
+    items:
+      config: /config
+      plan: /plan
+      chain: /chain
+      process: /process
+      dependencies: /dependencies
+      executors: /executors
+      notificators: /notificators 
+      values: /values
+      plugins: /plugins
+      API: /api
+
+# Content
+excerpt_link: Read more
+
+# Miscellaneous
+rss: /atom.xml
+google_analytics:
+
+social:
+ github: github.com
+ linkedin: linkedin.com
