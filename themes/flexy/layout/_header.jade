@@ -1,19 +1,27 @@
-if theme.logo
-  a(href= config.root)
-    img(src= theme.logo, alt= config.title, title= config.title)
-h1
-  a(href= config.root, alt= config.title, title= config.title, itemprop='headline')= config.title
-p(itemprop='description')!= config.description
-nav(itemscope, itemtype='https://schema.org/SiteNavigationElement')
-  ul
-    each key, val in theme.sections
-      li(class='menu-li')
-        span(class='menu-section')= val
-          each url, label in key.items
-            li(itemprop='name')
-              a(href= url, alt= label, title= label, itemprop='url')= label
-    div.social
-      each url, label in theme.social
-        span.social-icon
-          a(href=url, target=_blank)
-            i(class='fa fa-#{label}') 
+.bg
+.bg.hidden
+
+.interior
+  .caja
+    if theme.logo
+      a(href= config.root)
+        img(src= theme.logo, alt= config.title, title= config.title)
+    h1
+      a(href= config.root, alt= config.title, title= config.title, itemprop='headline')= config.title
+    p(itemprop='description')!= config.description
+    nav(itemscope, itemtype='https://schema.org/SiteNavigationElement')
+      ul
+        each key, val in theme.sections
+          li(class='menu-li')
+            span(class='menu-section')= val
+              each url, label in key.items
+                li(itemprop='name')
+                  a(href= url, alt= label, title= label, itemprop='url')= label
+.social
+  each url, label in theme.social
+    span.social-icon
+      a(href=url, target=_blank)
+        i(class='fa fa-#{label}')
+  .coderty
+    a(href= "http://www.coderty.com")
+      img(src= "/images/coderty.png", alt= "Coderty", title= "Coderty")

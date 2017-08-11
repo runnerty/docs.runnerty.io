@@ -5,9 +5,7 @@ pubkey: 13DB CAA1 2633 81A7
 sections: 
   HOME:
     items:
-      quick start: /
-  DOCS:
-    items:
+      quick start: /docs/
       config: /config
       plan: /plan
       chain: /chain
@@ -24,8 +22,10 @@ excerpt_link: Read more
 
 # Miscellaneous
 rss: /atom.xml
-google_analytics:
+google_analytics: UA-99090757-1
 
 social:
- github: github.com
- linkedin: linkedin.com
+ github: https://github.com/Coderty/runnerty
+ twitter: https://twitter.com/runnerty_io
+ npm: https://www.npmjs.com/package/runnerty
+ slack: https://runnerty.slack.com/shared_invite/MTgxNDQ2NTk2NTk3LTE0OTQ0MTIxMDMtOGRkYWQyNzEyOA

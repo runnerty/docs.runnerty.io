@@ -97,27 +97,31 @@ $shade-blue    = darken($blue, 25%)
 $dark-blue     = darken($blue, 70%)
 $darker-blue   = darken($blue, 80%)
 
+$runnerty-azul = #012839
+$runnerty-verde = #c0fc49
+$runnerty-celeste = #00187ba
+
 // 0.4 Defaults
 
 $author = 'Sjaak van den Berg'
 
-$title-color             = $blue
+$title-color             = $runnerty-azul 
 $description-color       = $white
-$header-link-color       = $black
-$link-hover-header-color = $blue
+$header-link-color       = $white
+$link-hover-header-color = $runnerty-verde
 
 $body-color            = $black
 $post-meta-color       = $gray
-$body-link-color       = $black
-$body-link-hover-color = $blue
+$body-link-color       = $runnerty-azul 
+$body-link-hover-color = $runnerty-verde
 
 $background-color   = $light-gray
 $accent-color       = $shade-gray
-$quote-accent-color = $blue
+$quote-accent-color = $runnerty-azul 
 
 $background-header-path = '../images/header.jpg'
 
-$footer-pubkey-color = $gray
+$footer-pubkey-color = $runnerty-azul 
 
 $default-padding = 20px
 
@@ -154,16 +158,28 @@ header,
 main
   overflow-y auto
   -webkit-overflow-scrolling touch
+  padding 0px
+main
   padding 20px
-
 // ===========================================================================
 // 2. Header
 // ===========================================================================
 
 header
+  overflow hidden !important
+  .interior
+    padding 0px
+    width 100%
+    background-color: rgba(0,0,0,.70)
+    z-index 3
+    position relative
+    overflow hidden
+    .caja
+      padding 40px 40px 70px 40px
+
   background-image linear-gradient(8deg, hsl(220, 100%, 12%), hsl(220, 40%, 4%) 50%)
   flex 1
-  overflow hidden
+  overflow scroll
   position relative
   text-align center
   a
@@ -218,16 +234,15 @@ header
         &:after
           content ''
   .menu-li
-    margin-top 10px
-    margin-bottom 6px
-    color white
+    display none
+  li:nth-child(2)
+    margin-bottom 0px
+    a
+      color $runnerty-verde
   .menu-section    
     border-bottom 2px solid
   .space
-    //animation slide 8s linear infinite
-    background-image url('../images/back-runnerty.jpg')
-    background-position center center
-    background-size 240px
+    background $light-gray
     height 400%
     left 0
     position absolute
@@ -236,19 +251,47 @@ header
     z-index 1
 
 .social
-    padding 20px 0 20px 20px
+  position absolute
+  bottom 0
+  left 0
+  padding 0px
+  background $runnerty-azul
+  width 100%
+  z-index 9
   .social-icon
+    float right
     display inline-block
-    width 50px
+    padding 10px 7px
     a 
       font-size 25px;
-      
+  .social-icon:nth-child(1)
+    padding-right 14px
+  .coderty
+    float left
+    margin-top 3px
+    img
+      height 20px
+      width 89px
+      padding 14px 10px 10px 14px
+
 // Header animation
 @keyframes slide
   0%
     transform translate3d(0, 0, 0)
   100%
     transform translate3d(-240px, -240px, 0)
+
+.bg
+  position absolute
+  width 100%
+  height 100%
+  z-index 2
+  -webkit-transition opacity 5s
+  -moz-transition opacity 5s
+  transition opacity 5s
+.hidden
+  opacity 0
+  z-index 2
 
 // ===========================================================================
 // 3. Main
@@ -714,7 +757,7 @@ dl dd
 
 code
 tt
-  background $body-link-hover-color
+  background $runnerty-azul
   border-radius .2em
   color $white
   font-family $code-font
@@ -842,7 +885,7 @@ figure.highlight
 // 6. Media Queries
 // ===========================================================================
 
-@media (min-width 720px)
+@media (min-width 900px)
 
   body
     display flex
@@ -852,7 +895,19 @@ figure.highlight
       flex 1
       overflow hidden
       text-align right
-      padding 40px
+      padding 0px
+
+      .interior
+        padding 0px
+        width 100%
+        height 100%
+        background-color: rgba(0,0,0,.70)
+        z-index: 3
+        position: absolute
+        overflow scroll
+
+        .caja
+          padding 40px 40px 70px 40px
 
       img
         margin 0 -10px 0 0
@@ -867,7 +922,8 @@ figure.highlight
             &:after
               content ''
               padding 0
-
+          li:nth-child(2)
+            margin-bottom 20px
     main
       flex 2
       padding 40px
@@ -995,3 +1051,10 @@ pre .chunk
 .gist .line-number
   min-width 25px
   font-size 1.1rem
+.fa
+  font-size 20px !important
+.fa-npm
+  background: transparent url(../images/npm.png) center center no-repeat;
+  background-size: cover;
+  width: 20px;
+  height: 20px;
