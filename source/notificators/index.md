@@ -4,7 +4,7 @@ title: notificators
 
 The notificators are plugins for Runnerty used for notifying occurred in the processes or chains. 
 
-There are a bunch of notificators for different channels. You can have a look at the official list [here](executors.md).
+There are a bunch of notificators for different channels. You can have a look at the official list [here](../executors/).
 
 ### configuration
 

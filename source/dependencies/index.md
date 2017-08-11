@@ -7,7 +7,7 @@ Runnerty provides a powerful feature to establish dependencies between processes
 
 ## process dependencies
 
-It is very easy to establish dependencies between processes using the property `"depends_process"` in our processes. If you want to know how to configure and use processes in your chains, please click [here](process.md).
+It is very easy to establish dependencies between processes using the property `"depends_process"` in our processes. If you want to know how to configure and use processes in your chains, please click [here](../process/).
 
 We can set up a dependencie to other process end state using `"$end"`  and `"$fail"` operators:
 
@@ -79,7 +79,7 @@ In this example process E will start only if process A or B fails and process C 
 
 ## evaluations
 
-With Runnerty we can also establish dependencies of an evaluation using values from our processes or chains. If you want to know more about the usage of values in Runnerty, please click [here](values.md).
+With Runnerty we can also establish dependencies of an evaluation using values from our processes or chains. If you want to know more about the usage of values in Runnerty, please click [here](../values/).
 
 ### conditions
 
