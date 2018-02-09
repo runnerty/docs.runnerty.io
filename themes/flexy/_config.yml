@@ -5,7 +5,7 @@ pubkey: 13DB CAA1 2633 81A7
 sections: 
   HOME:
     items:
-      quick start: /docs/
+      quick start: /
       config: /config
       plan: /plan
       chains: /chains
