@@ -5,15 +5,18 @@ pubkey: 13DB CAA1 2633 81A7
 sections: 
   HOME:
     items:
-      quick start: /docs/
+      quick start: /
       config: /config
       plan: /plan
-      chain: /chain
+      chains: /chains
+      triggers: /triggers
       process: /process
       dependencies: /dependencies
       executors: /executors
-      notificators: /notificators 
+      notifiers: /notifiers 
       values: /values
+      functions: /functions
+      queues: /queues
       plugins: /plugins
       API: /api
 
