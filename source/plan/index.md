@@ -1,6 +1,4 @@
----
-title: plan
----
+# Plan
 
 The chain or chains that are going to be executed are defined in the plan.json file. 
 
@@ -51,7 +49,7 @@ This is the basic structure of a plan with chain with one process:
     {
       "id": "EXAMPLE_CHAIN",
       "name": "Name of the sample chain",
-      "schedule_interval": "* * * * *",
+      "triggers": [],
       "depends_chains": [],
       "processes": [
         {

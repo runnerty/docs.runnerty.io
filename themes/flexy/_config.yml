@@ -8,12 +8,15 @@ sections:
       quick start: /docs/
       config: /config
       plan: /plan
-      chain: /chain
+      chains: /chains
+      triggers: /triggers
       process: /process
       dependencies: /dependencies
       executors: /executors
-      notificators: /notificators 
+      notifiers: /notifiers 
       values: /values
+      functions: /functions
+      queues: /queues
       plugins: /plugins
       API: /api
 
