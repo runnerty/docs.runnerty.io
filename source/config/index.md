@@ -47,6 +47,13 @@ The triggers are plugins which provoked the execution of a chain.
 The most common case is the schedule trigger which allows us to execute a chain with a periodicity like CRON. 
 
 Another example is the file watcher trigger. This trigger let us to execute a chain based on the events defined over a directory or file.
+Have a look at: [triggers](../triggers/)
+
+### Servers
+Servers allow us to abstract ourselves of the endpoints implementation in a trigger development. Runnerty will set the servers indicated in the config file. It will take care about the routing and will serve one property for the triggers (on_request). In this property it will receive the requests of the endpoint. Moreover it allows customization of the response, also the status code and the possibility so send an object.
+
+Have a look at: [triggers](../triggers/)
+
 
 ### Executors
 The executors are plugins which enclose functionalities. This plugins allows Runnerty execute processes, data bases operations, use external services, etc. This is a list of the official available [here](../plugins/)
@@ -77,7 +84,7 @@ This is an example of the configuration of two executors (shell and mysql):
 
 ### Notifiers
 
-The Notifiers are plugins which allows Runnerty to notificate events that happend in the chain and processes to different services and channels. This is a list of the official available [Plugins]
+The Notifiers are plugins which allows Runnerty to notificate events that happend in the chain and processes to different services and channels. This is a list of the official available [plugins](../plugins/)
 
 In the config.json file are defined all the notifiers that are going to be used in the whole plan.
 
@@ -134,7 +141,7 @@ It is possible to define values that can be used in the chains an process (paths
   }
 ```
 
-These values can be used in the whole plan (chains and proccess) referencing them. Runnerty has also some default values. Have a look at: [link]
+These values can be used in the whole plan (chains and proccess) referencing them. Runnerty has also some default values. Have a look [here](../values/)
 
 
 ### Cripted passwords
