@@ -1,4 +1,4 @@
-# Chain
+# Chains
 
 A chain is a set of processes with its own properties like scheduling, notifications, dependencies, outputs, etc.
 
@@ -6,22 +6,19 @@ This is an example of a basic chain with one process:
 
 ```json
 {
-  "chains":[
+  "chains": [
     {
-      "id": "EXAMPLE_CHAIN",
-      "name": "Name of the sample chain",
+      "id": "EXAMPLE-CHAIN",
+      "name": "Sample chain name",
       "triggers": [],
       "depends_chains": [],
       "processes": [
         {
-          "id": "PROCESS_ONE",
-          "name": "Firt process of the chains",
+          "id": "PROCESS-ONE",
+          "name": "First chain process",
           "exec": {
             "id": "shell_default",
             "command": "echo 'Hello world'"
-          },
-          "chain_action_on_fail": {
-            "action": "end"
           }
         }
       ]
@@ -30,45 +27,45 @@ This is an example of a basic chain with one process:
 }
 ```
 
+Runnerty has a default unattended point of view for chains and processes managment. This means that unless you specify a modification propetie for a process or chain it will try to run the next process or the chain until the end. More details below in the action on failed chain section [here](../chains/).
 
 ### Identification
 
 A chain has two identification fields:
 
-**id** Which identifies the chain. with this identifier Runnerty will provide a global value (*CHAIN_ID*) that can be used in the whole chain. To know more about global values have a look [here](../config/)
+`id` -> Which identifies the chain. With this identifier Runnerty will provide a global value _CHAIN_ID_ that can be used in the whole chain. To learn more about global values have a look [here](../values/).
 
 ```json
 {
-  "id": "EXAMPLE_CHAIN"
+  "id": "EXAMPLE-CHAIN"
 }
 ```
 
-**name** It is a description of the chain. Runnerty will also provide the global value *CHAIN_NAME*
+`name` -> It is a description of the chain. Runnerty will also provide the global value _CHAIN_NAME_
 
 ```json
 {
-  "id": "EXAMPLE_CHAIN",
-  "name": "Name of the sample chain"
+  "id": "EXAMPLE-CHAIN",
+  "name": "Sample chain name"
 }
 ```
-
 
 ### Execution (Triggers)
-A chain can be fired by using ***triggers***. There is a bunch of different triggers, have a look at them and how to use them [here](../triggers/) 
 
+A chain can be fired by using **_triggers_**. There is a bunch of different triggers, have a look at them and how to use them [here](../triggers/)
 
 ### Custom values
 
 It is possible to define and overwrite global values at chain level, setting a **custom_values** attribute:
+
 ```json
 {
-  "id": "EXAMPLE_CHAIN",
-  "name": "Name of the sample chain",
-  "custom_values": 
-    {
-      "YYYY": "1986",
-      "MY_LOCAL_CHAIN_VALUE": "ABC"
-    }
+  "id": "EXAMPLE-CHAIN",
+  "name": "Sample chain name",
+  "custom_values": {
+    "YYYY": "1986",
+    "MY_LOCAL_CHAIN_VALUE": "ABC"
+  }
 }
 ```
 
@@ -80,17 +77,17 @@ You can define these dependency restrictions through the **depends_chains** prop
 
 ```json
 {
-  "depends_chains": ["CHAIN_ONE"]
+  "depends_chains": ["CHAIN-ONE"]
 }
 ```
 
-The chain of the example will not be executed until the chain with *id* *CHAIN_ONE* is finished. It is also possible to configure a set of dependencies to one chain's process or more:
+The chain of the example will not be executed until the chain with _id_ _CHAIN_ONE_ is finished. It is also possible to configure a set of dependencies to one chain's process or more:
 
 ```json
 {
   "depends_chains": {
-    "chain_id": "CHAIN_ONE",
-    "process_id": "PROCESS_ONE"
+    "chain_id": "CHAIN-ONE",
+    "process_id": "PROCESS-ONE"
   }
 }
 ```
@@ -98,15 +95,16 @@ The chain of the example will not be executed until the chain with *id* *CHAIN_O
 ### Notifications
 
 With the **notifications** property, Runnerty can be set up to emit notifications during the chain status flow, fired up by the following callbacks:
-- *on_start*
-- *on_fail*
-- *on_end*
-- *on_retry*
-- *on_queue*
 
-In these notifications we could notify anything using **notifiers**.
+- _on_start_
+- _on_fail_
+- _on_end_
+- _on_retry_
+- _on_queue_
 
-The following example shows how to set up notifications for the different states of the chain through *Telegram Notifier*, publishing messages to a previously defined Telegram's chatroom:
+In these notifications we could notify anything using **notifiers** plugins.
+
+The following example shows how to set up notifications for the different states of the chain through [_Telegram Notifier_](../plugins/), publishing messages to a previously defined Telegram's chatroom:
 
 ```json
 {
@@ -144,24 +142,23 @@ The following example shows how to set up notifications for the different states
   }
 }
 ```
->Note the usage of the *global value and function @GV(CHAIN_ID)* on the previous example. This value will be replaced with the chain's *id*. Know more about global values [here](../config/). Know more about functions [here](../functions/)
+
+> Note the usage of the _global value and function @GV(CHAIN_ID)_ on the previous example. This value will be replaced with the chain's _id_. Learn more about global values [here](../config/) and more about functions [here](../functions/)
 
 Learn more about notifiers and how to configure them [here](../notifiers/).
 
-
 ### Processes
 
-In the **processes** array property can be defined all the processes that are going to be part of the chain.
+In the **processes** array property we can defined all the processes that are going to be part of the chain.
 
-Learn more about *processes* and how to configure them [here](../process/).
-
+Learn more about _processes_ and how to configure them [here](../process/).
 
 ```json
 {
   "processes": [
     {
-      "id": "PROCESS_ONE",
-      "name": "First process of the chain",
+      "id": "PROCESS-ONE",
+      "name": "First chain process",
       "exec": {
         "id": "shell_default",
         "command": "echo 'Hello world'"
@@ -171,44 +168,74 @@ Learn more about *processes* and how to configure them [here](../process/).
 }
 ```
 
-### Actions in chain when process fail
+### Actions for a chain when a process fails
 
-It is possible to define what action (end or retry) to perform at the chain level in case a process fails.
+It is possible to define what action (abort or retry) to perform at the chain level in case a process fails. The number of `retries` and delay (`retry_delay`) settings will be set at the chain level.
 
-Retry it 2 times with a delay of 2 seconds (2000ms) if the process fails:
 ```json
 {
-  "...": "...",
+  "id": "CHAIN_SAMPLE",
+  "name": "Chain with retries",
+  "retries": 1,
+  "retry_delay": "1 min",
   "processes": [
     {
-      "id": "SAMPLE_PROCESS",
+      "id": "SAMPLE-PROCESS",
       "...": "...",
-      "chain_action_on_fail": {
-        "action": "retry",
-        "delay": "1 min",
-        "retries": 2
-      }
+      "chain_action_on_fail": "retry"
     }
   ]
 }
 ```
 
-End the chain if the process fails:
+Abort the chain if the process fails (this action ends the chain's flow so no other processes will be executed). It is not necessary to indicate, is the default value:
+
 ```json
 {
   "...": "...",
   "processes": [
     {
-      "id": "SAMPLE_PROCESS",
+      "id": "SAMPLE-PROCESS",
       "...": "...",
-      "chain_action_on_fail": {
-        "action": "end"
-      }
+      "chain_action_on_fail": "abort"
     }
   ]
 }
 ```
 
+Also you can skip this option (`chain_action_on_fail`) so though any process failed, the chain will continue while the dependencies between processes are met (by using `depends_process` propertie).
+
+Also, it is possible to indicate in the process that the execution continues even though an error occurs:
+
+```json
+{
+  "...": "...",
+  "processes": [
+    {
+      "id": "SAMPLE-PROCESS",
+      "...": "...",
+      "chain_action_on_fail": "continue"
+    }
+  ]
+}
+```
+
+This will cause the process error to be reported but the string continue and end without error.
+Additionally, it could force the chain to end with an error indicating that the process error is taken into account for the final state of the chain:
+
+```json
+{
+  "...": "...",
+  "processes": [
+    {
+      "id": "SAMPLE-PROCESS",
+      "...": "...",
+      "chain_action_on_fail": "continue",
+      "ignore_in_final_chain_status": false
+    }
+  ]
+}
+```
 
 Delay property understands the following strings:
 
@@ -248,18 +275,17 @@ Delay property understands the following strings:
 
 The space after the number is optional so you can also write `1ms` instead of `1 ms`. In addition, it also accepts numbers and strings which only includes numbers and we assume that these are always in milliseconds.
 
-*From: [Millisecond module]*(https://github.com/unshiftio/millisecond)
+_From: [Millisecond module]_(https://github.com/unshiftio/millisecond)
 
 ### Iterable chains
 
 An **iterale chain** is a chain that is going to be executed for each object in the array previously returned by another process.
 
-For example, if we have a process which returns *one objects array* we can execute an iterable chain for each object in the array.
+For example, if we have a process which returns _one objects array_ we can execute an iterable chain for each object in the array.
 
 In the following example we are going to send an email to every user of the USERS table.
 
 First, we have the chain get-users-email.json with a process which selects all the users's email:
-
 
 ```json
 {
@@ -267,7 +293,7 @@ First, we have the chain get-users-email.json with a process which selects all t
   "name": "It gets all the user's names to send an email",
   "triggers": [
     {
-      "id":"schedule_default",
+      "id": "schedule_default",
       "schedule_interval": "1 */1 * * *"
     }
   ],
@@ -287,12 +313,14 @@ First, we have the chain get-users-email.json with a process which selects all t
 
 Then, we assign the returned resultset by the MySQL SELECT query as an object array with the **PROCESS_EXEC_DATA_OUTPUT** value, as part of the property **output_iterable**. This way we are announcing this process will return an iterable output.
 
-Now we are going to define the iterable chain *"send-mail-to-user"*
+Now we are going to define the iterable chain _"send-mail-to-user"_
 
 ```json
 {
   "id": "SEND-MAIL-TO-USERS",
   "name": "it sends an email to the users returned",
+  "retries": 1,
+  "retry_delay": "1 min",
   "depends_chains": {
     "chain_id": "GET-USERS-EMAIL",
     "process_id": "GET-USER-EMAIL"
@@ -312,23 +340,17 @@ Now we are going to define the iterable chain *"send-mail-to-user"*
       "name": "sends the email to the user",
       "exec": {
         "id": "mail_default",
-        "to": [
-          ":email"
-        ],
+        "to": [":email"],
         "message": "Hello :name",
         "title": "Message set by Runnerty"
       },
-      "chain_action_on_fail": {
-        "action": "retry",
-        "delay": "1 min",
-        "retries": 1
-      }
+      "chain_action_on_fail": "retry"
     }
   ]
 }
 ```
 
-Here we can see some properties that the chain needs to iterate. First of all we have the dependencies on the **depends_chains** property. An iterable chain **must depends** on the process from the *"mother chain"* whom it iterates:
+Here we can see some properties that the chain needs to iterate. First of all we have the dependencies on the **depends_chains** property. An iterable chain **must depends** on the process from the _"mother chain"_ whom it iterates:
 
 ```json
 {
@@ -368,7 +390,7 @@ With the **input** property we can assign the properties of each object returned
       "name": "name"
     }
   ],
-  "...":"..."
+  "...": "..."
 }
 ```
 
@@ -382,19 +404,101 @@ Now, we can use these values anywhere in our iterable chain:
       "name": "sends the email to the user",
       "exec": {
         "id": "mail_default",
-        "to": [
-          ":email"
-        ],
+        "to": ["@GV(email)"],
         "message": "Hello :name",
         "title": "Message send by Runnerty"
-      },
-      "chain_action_on_fail": {
-        "action": "end"
       }
     }
   ]
 }
 ```
+
 In the example :email will be replaced with the user's email and :name will be replaced with the user's name.
 
+### Default properties for processes
 
+It is possible to define a default value for all the processes in a chain of `notifications`,`output` and `chain_action_on_fail`, depending on the `defaults_processes` property of a chain.
+
+For example:
+
+```json
+{
+      "id": "CHAIN_SAMPLE",
+      "name": "CHAIN_SAMPLE",
+      "defaults_processes": {
+        "notifications": {
+          "on_start": [
+            {
+              "id": "console_default",
+              "message": "PROCESS @GV(PROCESS_ID) START"
+            }
+          ],
+          "on_fail": [
+            {
+              "id": "console_default",
+              "message": "ERR! PROCESS @GV(PROCESS_ID) FAIL: @GV(PROCESS_EXEC_ERR_OUTPUT)"
+            }
+          ],
+          "on_end": [
+            {
+              "id": "console_default",
+              "message": "PROCESS @GV(PROCESS_ID) END"
+            }
+          ]
+        },
+        "output": [
+          {
+            "file_name": "./test.log",
+            "write": [
+              "@GETDATE('YYYY-MM-DD HH:mm:sS') - @GV(CHAIN_ID)/@GV(PROCESS_ID)/@GV(PROCESS_EXEC_COMMAND_EXECUTED)\n"
+            ],
+            "concat": true,
+            "maxsize": "10mb"
+          }
+        ],
+        "chain_action_on_fail": "abort"
+      },
+      "processes": [...]
+```
+
+It is also possible to overwrite the default values (`defaults_processes`) in each of the processes.
+For example, in this case the default value of the `on_start` event of `notifications` is overwritten in the `PROCESS_SAMPLE` process, the rest of the `notifications` values will be those defined by default:
+
+```json
+{
+      "id": "CHAIN_SAMPLE",
+      "name": "CHAIN SAMPLE",
+      "defaults_processes": {
+        "notifications": {
+          "on_start": [
+            {
+              "id": "console_default",
+              "message": "PROCESS @GV(PROCESS_ID) START"
+            }
+          ],
+          "on_fail": [
+            {
+              "id": "console_default",
+              "message": "ERR! PROCESS @GV(PROCESS_ID) FAIL: @GV(PROCESS_EXEC_ERR_OUTPUT)"
+            }
+          ]
+        }
+      },
+      "processes": [
+        {
+          "id": "PROCESS_SAMPLE",
+          "name": "PROCESS SAMPLE",
+          "exec": {
+            "id": "shell_default",
+            "command": "echo hello world"
+          },
+          "notifications": {
+            "on_start": [
+              {
+                "id": "console_default",
+                "message": "OVERRIDE: PROCESS @GV(PROCESS_ID) START"
+              }
+            ]
+          }
+        }]
+```

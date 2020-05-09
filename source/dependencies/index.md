@@ -1,167 +1,100 @@
-# Dependencies
+# Executors
 
-Runnerty provides a powerful feature to establish dependencies between processes. Not only it is possible to set up dependencies to other processes end states. You can also use operators to evaluate values, add complex conditions using operators and multiple expressions.
+The executors are plugins for Runnerty which encapsulate functionalities. The processes of a chain use executors to realize different actions.
 
+There are a bunch of executors for different purposes. Execute sentences in different databases like mysql, postgres, etc. Sending mails, operations with S3 files. You can have a look at the official list of executors [here](../plugins/).
 
-## Process dependencies
+### Configuration
 
-It is very easy to establish dependencies between processes using the property `"depends_process"` in our processes. If you want to know how to configure and use processes in your chains, please click [here](../process/).
-
-We can set up a dependencie to other process end state using `"$end"`  and `"$fail"` operators:
-
-In the example below `PROCESS_B` will start when `PROCESS_A` ends:
+In the config.json file of the project we are going to write the configuration of the different executors that are going to be used in the processes.
 
 ```json
 {
-  "id": "PROCESS_B",
-  "name": "Second process of the chain",
-  "depends_process": {"$end": "PROCESS_A"},
-  "...": "..."
-}
-```
-Note than we can simplify this action just by adding `"depends_process": ["PROCESS_A"]`
-
-In this example `PROCESS_B` will start if `PROCESS_A` fails:
-
-```json
-{
-  "id": "PROCESS_B",
-  "name": "Second process of the chain",
-  "depends_process": {"$fail": "PROCESS_A"},
-  "...": "..."
+  "executors": [
+    {
+      "id": "shell_default",
+      "type": "@runnerty-executor-shell"
+    },
+    {
+      "id": "mysql_default",
+      "type": "@runnerty/executor-mysql",
+      "user": "mysqlusr",
+      "password": "mysqlpass",
+      "database": "MYDB",
+      "host": "myhost.com",
+      "port": "3306"
+    }
+  ]
 }
 ```
 
-### Operators
+This is an example of the configuration of two executors: `@runnerty-executor-shell` and `@runnerty-executor-mysql`. Each executor has it's owns properties, some of them are mandatory, you can have a look at each executor documentation to know how to use them.
 
-It is possible to add operators to the dependencies if we need to evaluate more than one process:
+### Usage
 
-Dependencies of two processes:
+The destination of an executor is to use it in our plan's processes. We could say that using an executor has two parts: `configuration` and `params`.
+
+The configuration properties are set in the [config.json](../config/). They are the identifiers fields of the executor. For example, this is the configuration properties for the @runnerty-executor-shell:
 
 ```json
 {
-  "id": "PROCESS_C",
-  "name": "Second process of the chain",
-  "depends_process": {"$and": [{"$end": "PROCESS_A"},{"$end": "PROCESS_B"}]},
-  "...": "..."
+  "executors": [
+    {
+      "id": "shell_default",
+      "type": "@runnerty-executor-shell"
+    }
+  ]
 }
 ```
-Note than we can simplify this action just by adding `"depends_process": ["PROCESS_A","PROCESS_B"]`
 
-### Complex dependencies:
+The `id` is the name given for the executor configuration. Note that we could have all the differents configuratios that we want for the same executor. The `type` is the name of the executor.
 
-Using operatios Runnerty offers the possibility to add complex dependencies between our processes. 
-
-In this example process E will start only if process A or B fails and process C and D end:
+In the processes are set the variable properties (params) for the executor. This is an example of the usage of the @runnerty-executor-shell in a process
 
 ```json
 {
-  "id": "PROCESS_E",
-  "name": "Second process of the chain",
-  "depends_process": {
-    "$and": [
-      {
-        "$or": [
-          {"$fail": "PROCESS_A"},
-          {"$fail": "PROCESS_B"}
-        ]
-      }
-    ],
-    "$and": [
-      {"$end": "PROCESS_C"},
-      {"$end": "PROCESS_D"}
-    ]
+  "id": "PROCESS_ONE",
+  "name": "First process of the chain",
+  "exec": {
+    "id": "shell_default",
+    "command": "echo",
+    "args": ["hello world"]
   }
 }
 ```
 
-## Evaluations
+Runnerty matchs the `id` property from the plan with the config.json one to identify the executor to run. Properties like `command` and `args` are the variable properties that may change in every process.
 
-With Runnerty we can also establish dependencies of an evaluation using values from our processes or chains. If you want to know more about the usage of values in Runnerty, please click [here](../values/).
+It is important to know that it is possible to overwrite some configuration properties from the `exec` properties of the processes. For example: if we are using the @runnerty/executor-mysql we may want to change the database that the executor is going to connect.
 
-### Conditions
-
-```
-$eq    - equal
-$gt    - greater than 
-$gte   - greater than equal. Exmaple: {2:{"$gte":1}
-$lt    - less than
-$lte   - less than equal
-$ne    - not equal
-$in    - in the list. Example: {"A":{"$in":["Z","X","A","O"]}}
-$nin   - not in the list. Example: {"A":{"$nin":["Z","X","Y","O"]}}
-$match - supports regular expressions. Example: "depends_process":{"$and":[{"aBc":{"$match":"/ABC/i"}}]}
-```
-
-This is an example of how to use conditions in the dependencies of a proecess:
+This is the configuration of the executor. We are connecting to `"MYDB"`
 
 ```json
 {
-  "id": "PROCESS_B",
-  "name": "Second process of the chain",
-  "depends_process": {
-    "$and": [
-        {"VAL_1": {"$eq": "VAL_2"}},
-        {"VAL_2": {"$gte": "VAL_3"}}
-      ]
+  "executors": [
+    {
+      "id": "mysql_default",
+      "type": "@runnerty/executor-mysql",
+      "user": "mysqlusr",
+      "password": "mysqlpass",
+      "database": "MYDB",
+      "host": "myhost.com",
+      "port": "3306"
     }
+  ]
 }
 ```
 
-Moreover, we can use the conditions however we want in the `"depends_process"` property and create complex evaluations:
+We can overwrite this information from the `exec` properties of the process:
 
 ```json
 {
-  "id": "PROCESS_B",
-  "name": "Second process of the chain",
-  "depends_process": {
-      "$and": [
-        {"$or": [
-            {"VAL_1": {"$eq": "VAL_2"}},
-            {"VAL_1": {"$eq": "VAL_3"}}
-          ]
-        },
-        {"$or": [
-            {"VAL_2": {"$gte": "VAL_4"}},
-            {"VAL_2": {"$gte": "VAL_5"}}
-          ]
-        },
-        {"$and": [
-            {"VAL_3": {"$eq": "VAL_6"}},
-            {"VAL_4": {"$eq": "VAL_7"}}
-          ]
-        }
-      ]
-    }
-}
-```
-
-## Multiple expressions
-
-At this point, you probably imagine that it is also possible to mix dependencies with other processes states and values evaluations. This is a simple example of how to do that:
-
-```json
-{
-  "id": "PROCESS_B",
-  "name": "Second process of the chain",
-  "depends_process": {
-    "$and": [
-      {"$end": "PROCESS_A"}, 
-      {"$and": [
-          {"$or":[
-              {"VAL1":{"$eq":"VAL1"}},
-              {"VAL1":{"$eq":"VAL3"}}
-            ]
-          },
-          {"$or":[
-              {"VAL4":{"$ne":"VAL4"}},
-              {"VAL4":{"$ne":"VAL5"}}
-            ]
-          }
-        ]
-      }
-    ]
+  "id": "PROCESS_ONE",
+  "name": "First process of the chain",
+  "exec": {
+    "id": "mysql_default",
+    "command": "select 'HELLO'",
+    "database": "MYDB2"
   }
 }
 ```
-

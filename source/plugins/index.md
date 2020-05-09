@@ -1,6 +1,6 @@
 # List of plugins availables
 
-This is the list of the official plugins availables. 
+This is the list of the official plugins availables.
 
 ## Executors
 
@@ -24,6 +24,7 @@ This is the list of the official plugins availables.
 - [Confirmation](https://www.npmjs.com/package/@runnerty/executor-confirmation)
 - [XML/JSON Parser](https://www.npmjs.com/package/@runnerty/executor-parse-xml-json)
 - [Twitter](https://www.npmjs.com/package/@runnerty/executor-twitter)
+- [Puppeteer](https://github.com/runnerty/executor-puppeteer-export)
 
 ## Notifiers
 
@@ -39,3 +40,4 @@ This is the list of the official plugins availables.
 - [File Watcher](https://www.npmjs.com/package/@runnerty/trigger-file-watcher)
 - [Twitter](https://www.npmjs.com/package/@runnerty/trigger-twitter)
 - [Firebase](https://www.npmjs.com/package/@runnerty/trigger-firebase)
+- [Server](https://www.npmjs.com/package/@runnerty/trigger-server)

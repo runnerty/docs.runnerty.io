@@ -18,6 +18,7 @@ sections:
       functions: /functions
       queues: /queues
       plugins: /plugins
+      usage: /usage
       API: /api
 
 # Content
